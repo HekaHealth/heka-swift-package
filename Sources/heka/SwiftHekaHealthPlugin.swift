@@ -1,31 +1,25 @@
 class HekaManager {
-  func requestAuthorization() -> Bool {
+  func requestAuthorization(completion: @escaping (Bool) -> Void) {
     let healthStore = HealthStore()
-    healthStore.requestAuthorization {
-      success in
-      if success {
-        return true
-      } else {
-        return false
-      }
+    healthStore.requestAuthorization { success in
+      completion(success)
     }
   }
 
-  func checkHealthKitPermissions() -> bool {
+  func checkHealthKitPermissions() -> Bool {
     let healthStore = HealthStore()
     return healthStore.checkHealthKitPermissions()
   }
 
-  func syncIosHealthData(apiKey: String, userUuid: String) -> bool {
+  func syncIosHealthData(apiKey: String, userUuid: String, completion: @escaping (Bool) -> Void) {
     let healthStore = HealthStore()
-    healthStore.requestAuthorization {
-      success in
+    healthStore.requestAuthorization { success in
       if success {
         // Setup observer query
         healthStore.setupStepsObserverQuery(apiKey: apiKey, userUuid: userUuid)
-        return true
+        completion(true)
       } else {
-        return false
+        completion(false)
       }
     }
   }

@@ -7,6 +7,7 @@
 
 import Alamofire
 import Foundation
+import SwiftyJSON
 
 class APIManager {
 
@@ -61,19 +62,24 @@ class APIManager {
     completion: @escaping (Result<Connection, Error>) -> Void
   ) {
 
+    let queryItems = [
+      URLQueryItem(name: "key", value: apiKey),
+      URLQueryItem(name: "user_uuid", value: userUuid),
+    ]
+
+    var components = URLComponents(string: "\(baseURL)/connect_platform_for_user")!
+    components.queryItems = queryItems
     AF.request(
-      "\(baseURL)/connect_platform_for_user",
+      components.url!,
       method: .post,
       parameters: [
         "key": apiKey,
         "user_uuid": userUuid,
-      ],
-      encoding: JSONEncoding.default,
-      body: [
         "refresh_token": googleFitRefreshToken,
         "email": emailId,
         "platform": platform,
-      ]
+      ],
+      encoding: JSONEncoding.default
     )
     .responseJSON { response in
       switch response.result {
@@ -104,7 +110,8 @@ class APIManager {
           )
           completion(.success(connection))
         } else {
-          completion(.failure(APIError.unexpectedDataFormat))
+          // TODO: do something here
+          // completion(.failure())
         }
       case let .failure(error):
         completion(.failure(error))
