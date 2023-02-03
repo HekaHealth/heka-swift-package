@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HekaComponent" customModule="heka"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="HekaComponent" id="iN0-l3-epB" customClass="HekaComponent" customModule="heka">
+            <rect key="frame" x="0.0" y="0.0" width="418" height="80"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XPk-Dd-cWR">
+                    <rect key="frame" x="0.0" y="0.0" width="418" height="80"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="waf-3Z-Mek">
+                            <rect key="frame" x="20" y="20" width="378" height="35"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appleHealthKit" translatesAutoresizingMaskIntoConstraints="NO" id="ZrB-0k-0XZ">
+                                    <rect key="frame" x="0.0" y="7.6666666666666679" width="20" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="20" id="cbE-D4-ONx"/>
+                                        <constraint firstAttribute="width" secondItem="ZrB-0k-0XZ" secondAttribute="height" id="ll6-LZ-2JY"/>
+                                    </constraints>
+                                </imageView>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lcj-0c-JwH">
+                                    <rect key="frame" x="36.000000000000014" y="0.0" width="247.33333333333337" height="35"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apple HealthKit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fds-DX-AAT">
+                                            <rect key="frame" x="0.0" y="0.0" width="247.33333333333334" height="35"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Syncing Data..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSb-Cb-0kN">
+                                            <rect key="frame" x="0.0" y="0.0" width="247.33333333333334" height="0.0"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" systemColor="secondaryLabelColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="ISC-4g-Hkc"/>
+                                    </constraints>
+                                </stackView>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R6R-LY-1ta">
+                                    <rect key="frame" x="299.33333333333331" y="2" width="78.666666666666686" height="31"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="tinted" title="Connect">
+                                        <fontDescription key="titleFontDescription" type="system" pointSize="14"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="actionConnectButton" destination="iN0-l3-epB" eventType="touchUpInside" id="1TH-CY-hlt"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="waf-3Z-Mek" firstAttribute="top" secondItem="XPk-Dd-cWR" secondAttribute="top" constant="20" id="BIu-fs-W2h"/>
+                        <constraint firstAttribute="trailing" secondItem="waf-3Z-Mek" secondAttribute="trailing" constant="20" symbolic="YES" id="XVp-Ba-t9U"/>
+                        <constraint firstItem="waf-3Z-Mek" firstAttribute="leading" secondItem="XPk-Dd-cWR" secondAttribute="leading" constant="20" symbolic="YES" id="pRI-fK-oOa"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="XPk-Dd-cWR" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="LsD-Rt-g1Q"/>
+                <constraint firstItem="XPk-Dd-cWR" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="R6U-Rj-C9v"/>
+                <constraint firstItem="XPk-Dd-cWR" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="W5k-X7-Dzg"/>
+                <constraint firstAttribute="bottom" secondItem="XPk-Dd-cWR" secondAttribute="bottom" id="jf6-1O-aSb"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="btnConnection" destination="R6R-LY-1ta" id="zik-nC-UMG"/>
+                <outlet property="contentView" destination="XPk-Dd-cWR" id="CLY-E8-Ndk"/>
+                <outlet property="lblSyncing" destination="eSb-Cb-0kN" id="rzo-iu-8f7"/>
+            </connections>
+            <point key="canvasLocation" x="-102.29007633587786" y="-169.71830985915494"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="appleHealthKit" width="170.66667175292969" height="170.66667175292969"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
