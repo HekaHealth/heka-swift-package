@@ -66,7 +66,7 @@ extension ComponentViewModel {
   }
   
   func checkHealthKitPermissions() {
-    guard hekaManager.checkHealthKitPermissions() else {
+    guard hekaManager.checkHealthKitPermissions() == true else {
       hekaManager.requestAuthorization { allowed in
         if allowed {
           self.setState(to: .syncing)
