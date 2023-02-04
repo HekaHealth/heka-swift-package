@@ -21,10 +21,10 @@ enum ConnectionState {
     }
   }
   
-  var buttonBGColor: UIColor? {
+  var buttonBGColor: UIColor {
     switch self {
       case .notConnected:
-        return UIColor(named: "connect")
+        return UIColor(named: "connect") ?? .systemOrange
       case .syncing:
         return UIColor.lightGray
       case .connected:
