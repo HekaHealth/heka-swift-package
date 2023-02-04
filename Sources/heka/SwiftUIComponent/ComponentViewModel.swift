@@ -66,32 +66,23 @@ extension ComponentViewModel {
   }
   
   func checkHealthKitPermissions() {
-    guard hekaManager.checkHealthKitPermissions() == true else {
-      hekaManager.requestAuthorization { allowed in
-        if allowed {
-          self.setState(to: .syncing)
-          self.makeRequestToWatchSDK()
-        } else {
-          self.errorDescription = "Please allow health app access permission, in order to use this widget"
+    hekaManager.requestAuthorization { allowed in
+      if allowed {
+        self.setState(to: .syncing)
+        self.hekaManager.syncIosHealthData(
+          apiKey: self.apiKey, userUuid: self.uuid
+        ) { success in
+          if success {
+            self.makeRequestToWatchSDK()
+          } else {
+            self.setState(to: .notConnected)
+            self.errorDescription = "Unable to sync health data"
+          }
         }
-      }
-      return
-    }
-    
-    self.setState(to: .syncing)
-    
-    hekaManager.syncIosHealthData(
-      apiKey: apiKey, userUuid: uuid
-    ) { success in
-      if success {
-        self.setState(to: .connected)
       } else {
-        self.setState(to: .notConnected)
-        self.errorDescription = "Unable to sync health data"
+        self.errorDescription = "Please allow health app access permission, in order to use this widget"
       }
     }
-    
-    makeRequestToWatchSDK()
   }
   
   private func makeRequestToWatchSDK() {
