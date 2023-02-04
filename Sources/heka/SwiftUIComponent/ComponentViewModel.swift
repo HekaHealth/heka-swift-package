@@ -69,6 +69,7 @@ extension ComponentViewModel {
     guard hekaManager.checkHealthKitPermissions() else {
       hekaManager.requestAuthorization { allowed in
         if allowed {
+          self.setState(to: .syncing)
           self.makeRequestToWatchSDK()
         } else {
           self.errorDescription = "Please allow health app access permission, in order to use this widget"
