@@ -34,6 +34,7 @@ final public class HekaComponent: UIView {
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
+    loadXIB()
   }
   
   convenience public init(userUUID: String, key: String) {
@@ -41,24 +42,45 @@ final public class HekaComponent: UIView {
     self.userUUID = userUUID
     self.key = key
     apiManager = APIManager(apiKey: key)
-    loadXIB()
     checkConnectionStatus()
-    
   }
   
   public func setUser(uuid: String, and key: String) {
     self.userUUID = uuid
     self.key = key
     apiManager = APIManager(apiKey: key)
-    loadXIB()
     checkConnectionStatus()
   }
   
+  private var bundle: Bundle {
+    let bundle = Bundle(for: HekaComponent.self)
+
+    guard let resourceBundleURL = bundle.url(
+      forResource: "heka", withExtension: "bundle"
+    ), let resourceBundle = Bundle(url: resourceBundleURL) else {
+        // used when the DLS is being used inside the playground app
+      return bundle
+    }
+
+    return resourceBundle
+  }
+  
   private func loadXIB() {
-    let loadedNib = Bundle.module.loadNibNamed(String(describing: type(of: self)), owner: self, options: nil)
-    guard let contentView = loadedNib?.first as? UIView else {
+      //    let resourceBundleURL = Bundle.module.url(forResource: "HekaComponent", withExtension: "xib")
+      //    let bundle = Bundle(url: resourceBundleURL!)
+    
+    let nib = UINib(nibName: String(describing: type(of: self)), bundle: .module)
+    let view = nib.instantiate(withOwner: self, options: nil).first as? UIView
+    guard let view = view else {
       fatalError("Unable to locate UI component")
     }
+    contentView = view
+      //    let loadedNib = Bundle.module.loadNibNamed(String(describing: type(of: self)), owner: self, options: nil)
+      //
+      //    guard let contentView = loadedNib?.first as? UIView else {
+      //      fatalError("Unable to locate UI component")
+      //    }
+      //    bundle?.loadNibNamed(String(describing: self), owner: self)
     addSubview(contentView)
     contentView.frame = bounds
     contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -68,7 +90,7 @@ final public class HekaComponent: UIView {
   @IBAction private func actionConnectButton() {
     switch state {
       case .notConnected:
-          self.checkHealthKitPermissions()
+        checkHealthKitPermissions()
       case .syncing, .connected:
         break
     }

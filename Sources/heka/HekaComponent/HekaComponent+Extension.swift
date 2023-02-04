@@ -26,18 +26,9 @@ extension HekaComponent {
   
   func checkHealthKitPermissions() {
     guard hekaManager.checkHealthKitPermissions() else {
-      hekaManager.requestAuthorization { allowed in
-        if allowed {
-          self.makeRequestToWatchSDK()
-        } else {
-          self.presentAlert(with: "Allow health data permissions in the Seetings App")
-        }
-      }
+      self.presentAlert(with: "Allow health data permissions in the Seetings App")
       return
     }
-    makeRequestToWatchSDK()
-  }
-  private func makeRequestToWatchSDK(){
     
       //TODO: - Setup observer query
     apiManager?.makeConnection(
@@ -63,8 +54,6 @@ extension HekaComponent {
       .compactMap({$0 as? UIWindowScene})
       .first?.windows
       .filter({$0.isKeyWindow}).first
-    DispatchQueue.main.async {
-      keyWindow?.rootViewController?.present(alert, animated: true)
-    }
+    keyWindow?.rootViewController?.present(alert, animated: true)
   }
 }

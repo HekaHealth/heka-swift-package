@@ -12,7 +12,7 @@
     {
       "identity" : "promisekit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mxcl/PromiseKit.git",
+      "location" : "https://github.com/mxcl/PromiseKit",
       "state" : {
         "revision" : "065a93d0077d54710c03e9d738e4d3998615fe82",
         "version" : "6.20.0"
