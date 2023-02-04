@@ -68,9 +68,7 @@ final public class HekaComponent: UIView {
   @IBAction private func actionConnectButton() {
     switch state {
       case .notConnected:
-        DispatchQueue.main.async {
           self.checkHealthKitPermissions()
-        }
       case .syncing, .connected:
         break
     }

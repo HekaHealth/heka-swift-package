@@ -25,7 +25,8 @@ extension HekaComponent {
   }
   
   func checkHealthKitPermissions() {
-    guard hekaManager.checkHealthKitPermissions() else {      hekaManager.requestAuthorization { allowed in
+    guard hekaManager.checkHealthKitPermissions() else {
+      hekaManager.requestAuthorization { allowed in
         if allowed {
           self.makeRequestToWatchSDK()
         } else {
@@ -62,6 +63,8 @@ extension HekaComponent {
       .compactMap({$0 as? UIWindowScene})
       .first?.windows
       .filter({$0.isKeyWindow}).first
-    keyWindow?.rootViewController?.present(alert, animated: true)
+    DispatchQueue.main.async {
+      keyWindow?.rootViewController?.present(alert, animated: true)
+    }
   }
 }
