@@ -9,7 +9,6 @@ import UIKit
 
 extension HekaComponent {
   
-  //TODO: - Need to find a place to call this method
   func checkConnectionStatus() {
     guard let uuid = userUUID else {
       fatalError("user's UUID not set for the HekaComponent")

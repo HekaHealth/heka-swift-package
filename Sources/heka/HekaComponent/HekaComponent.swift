@@ -27,13 +27,6 @@ final public class HekaComponent: UIView {
   var apiManager: APIManager?
   let hekaManager = HekaManager()
   
-  init(userUUID: String, key: String) {
-    self.userUUID = userUUID
-    self.key = key
-    apiManager = APIManager(apiKey: key)
-    super.init(frame: .zero)
-  }
-  
   public override init(frame: CGRect) {
     super.init(frame: .zero)
     loadXIB()
@@ -42,6 +35,21 @@ final public class HekaComponent: UIView {
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     loadXIB()
+  }
+  
+  convenience public init(userUUID: String, key: String) {
+    self.init(frame: .zero)
+    self.userUUID = userUUID
+    self.key = key
+    apiManager = APIManager(apiKey: key)
+    checkConnectionStatus()
+  }
+  
+  public func setUser(uuid: String, and key: String) {
+    self.userUUID = uuid
+    self.key = key
+    apiManager = APIManager(apiKey: key)
+    checkConnectionStatus()
   }
   
   private func loadXIB() {
