@@ -61,12 +61,21 @@ final public class HekaComponent: UIView {
         // used when the DLS is being used inside the playground app
       return bundle
     }
-    
+
     return resourceBundle
   }
   
   private func loadXIB() {
-    bundle.loadNibNamed(String(describing: self), owner: self)
+      //    let bundle = Bundle.module.url(forResource: "heka", withExtension: "plist")
+      //    let resourceBundle = Bundle(url: resourceBundleURL)
+    
+    let nib = UINib(nibName: String(describing: self), bundle: .module)
+    let view = nib.instantiate(withOwner: self, options: nil).first as? UIView
+    guard let view = view else {
+      fatalError("Unable to locate UI component")
+    }
+    contentView = view
+      //    bundle.loadNibNamed(String(describing: self), owner: self)
     addSubview(contentView)
     contentView.frame = bounds
     contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
