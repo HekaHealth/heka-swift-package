@@ -25,8 +25,7 @@ extension HekaComponent {
   }
   
   func checkHealthKitPermissions() {
-    guard hekaManager.checkHealthKitPermissions() else {
-      hekaManager.requestAuthorization { allowed in
+    guard hekaManager.checkHealthKitPermissions() else {      hekaManager.requestAuthorization { allowed in
         if allowed {
           self.makeRequestToWatchSDK()
         } else {
