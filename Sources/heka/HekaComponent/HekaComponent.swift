@@ -34,7 +34,7 @@ final public class HekaComponent: UIView {
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
-    loadXIB()
+//    loadXIB()
   }
   
   convenience public init(userUUID: String, key: String) {
