@@ -43,7 +43,7 @@ final public class HekaComponent: UIView {
     apiManager = APIManager(apiKey: key)
     loadXIB()
     DispatchQueue.main.async {
-      checkConnectionStatus()
+      self.checkConnectionStatus()
     }
   }
   
@@ -53,7 +53,7 @@ final public class HekaComponent: UIView {
     apiManager = APIManager(apiKey: key)
     loadXIB()
     DispatchQueue.main.async {
-      checkConnectionStatus()
+      self.checkConnectionStatus()
     }
   }
   
