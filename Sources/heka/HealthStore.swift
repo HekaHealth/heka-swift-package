@@ -350,7 +350,7 @@ class HealthStore {
       return completion(false)
     }
 
-    healthStore.requestAuthorization(toShare: [], read: Set(healthDataTypes)) {
+    healthStore.requestAuthorization(toShare: Set(healthDataTypes), read: Set(healthDataTypes)) {
       (success, error) in completion(success)
     }
 
