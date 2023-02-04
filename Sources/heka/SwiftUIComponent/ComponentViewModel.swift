@@ -14,7 +14,9 @@ final class ComponentViewModel: ObservableObject {
   @Published var errorOccured = Bool()
   private(set) var errorDescription = String() {
     didSet {
-      errorOccured = true
+      DispatchQueue.main.async {
+        self.errorOccured = true
+      }
     }
   }
   
@@ -47,13 +49,19 @@ final class ComponentViewModel: ObservableObject {
 }
 
 extension ComponentViewModel {
+  private func setState(to newState: ConnectionState) {
+    DispatchQueue.main.async {
+      self.state = newState
+    }
+  }
+  
   func checkConnectionStatus() {
     apiManager.fetchConnection(user_uuid: uuid) { connection in
       guard connection != nil else {
-        self.state = .notConnected
+        self.setState(to: .notConnected)
         return
       }
-      self.state = .connected
+      self.setState(to: .connected)
     }
   }
   
@@ -69,15 +77,15 @@ extension ComponentViewModel {
       return
     }
     
-    state = .syncing
+    self.setState(to: .syncing)
     
     hekaManager.syncIosHealthData(
       apiKey: apiKey, userUuid: uuid
     ) { success in
       if success {
-        self.state = .connected
+        self.setState(to: .connected)
       } else {
-        self.state = .notConnected
+        self.setState(to: .notConnected)
         self.errorDescription = "Unable to sync health data"
       }
     }
@@ -92,9 +100,9 @@ extension ComponentViewModel {
     ) { result in
       switch result {
         case .success:
-          self.state = .connected
+          self.setState(to: .connected)
         case .failure(let failure):
-          self.state = .notConnected
+          self.setState(to: .notConnected)
           self.errorDescription = failure.localizedDescription
       }
     }
