@@ -37,7 +37,7 @@ public struct SwiftUIView: View {
       Button(viewModel.buttonTitle) {
         switch viewModel.currentConnectionState {
           case .notConnected:
-              //Call the checkStatus method here
+            viewModel.checkHealthKitPermissions()
             break
           case .syncing, .connected:
             break

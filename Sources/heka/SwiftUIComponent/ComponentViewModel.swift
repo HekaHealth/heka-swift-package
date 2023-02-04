@@ -57,17 +57,61 @@ extension ComponentViewModel {
     }
   }
   
+  {
+    guard hekaManager.checkHealthKitPermissions() else {
+      hekaManager.requestAuthorization { allowed in
+        if allowed {
+          self.makeRequestToWatchSDK()
+        } else {
+          self.presentAlert(with: "Allow health data permissions in the Seetings App")
+        }
+      }
+      return
+    }
+    
+    hekaManager.syncIosHealthData(
+      apiKey: key!, userUuid: userUUID!,
+      completion: { success in
+        if success {
+        } else {
+          self.presentAlert(with: "Unable to sync health data")
+        }
+      })
+    
+    makeRequestToWatchSDK()
+  }
+  
   func checkHealthKitPermissions() {
     guard hekaManager.checkHealthKitPermissions() else {
-      self.errorDescription = "Please allow health app access permission, in order to use this widget"
+      hekaManager.requestAuthorization { allowed in
+        if allowed {
+          self.makeRequestToWatchSDK()
+        } else {
+          self.errorDescription = "Please allow health app access permission, in order to use this widget"
+        }
+      }
       return
     }
     
     state = .syncing
     
-      //TODO: - Setup observer query
+    hekaManager.syncIosHealthData(
+      apiKey: apiKey, userUuid: uuid
+    ) { success in
+      if success {
+        self.state = .connected
+      } else {
+        self.state = .notConnected
+        self.errorDescription = "Unable to sync health data"
+      }
+    }
+    
+    makeRequestToWatchSDK()
+  }
+  
+  private func makeRequestToWatchSDK() {
     apiManager.makeConnection(
-      userUuid: uuid, platform: "iOS",
+      userUuid: uuid, platform: "apple_healthkit",
       googleFitRefreshToken: nil, emailId: nil
     ) { result in
       switch result {
