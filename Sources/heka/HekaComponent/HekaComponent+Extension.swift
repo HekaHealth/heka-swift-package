@@ -26,9 +26,16 @@ extension HekaComponent {
 
   func checkHealthKitPermissions() {
     guard hekaManager.checkHealthKitPermissions() else {
-      self.presentAlert(with: "Allow health data permissions in the Seetings App")
+      hekaManager.requestAuthorization { allowed in
+        if allowed {
+          self.makeRequestToWatchSDK()
+        } else {
+          self.presentAlert(with: "Allow health data permissions in the Seetings App")
+        }
+      }
       return
     }
+
 
     hekaManager.syncIosHealthData(
       apiKey: apiManager?.apiKey, userUuid: userUUID,
@@ -38,6 +45,12 @@ extension HekaComponent {
           self.presentAlert(with: "Unable to sync health data")
         }
       })
+
+    makeRequestToWatchSDK()
+  }
+  private func makeRequestToWatchSDK(){
+    
+      //TODO: - Setup observer query
     apiManager?.makeConnection(
       userUuid: userUUID!, platform: "apple_healthkit",
       googleFitRefreshToken: nil, emailId: nil
@@ -60,7 +73,14 @@ extension HekaComponent {
       .filter({ $0.activationState == .foregroundActive })
       .compactMap({ $0 as? UIWindowScene })
       .first?.windows
+
       .filter({ $0.isKeyWindow }).first
     keyWindow?.rootViewController?.present(alert, animated: true)
+
+      .filter({$0.isKeyWindow}).first
+    DispatchQueue.main.async {
+      keyWindow?.rootViewController?.present(alert, animated: true)
+    }
+
   }
 }
