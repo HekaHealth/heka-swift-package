@@ -49,7 +49,7 @@ public struct SwiftUIView: View {
       .cornerRadius(20)
     }
     .padding(8)
-    .background(Color.white)
+    .background(Color(UIColor.secondarySystemBackground))
     .cornerRadius(8)
     .compositingGroup()
     .shadow(radius: 8)
