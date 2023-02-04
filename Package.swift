@@ -23,9 +23,8 @@ let package = Package(
     .target(
       name: "heka",
       dependencies: ["Alamofire", "PromiseKit", "SwiftyJSON"],
-      path: "Sources",
-      resources: [
-        .process("HekaComponent.xib")]),
+      path: "Sources"
+    ),
     .testTarget(
       name: "hekaTests",
       dependencies: ["heka"]),
