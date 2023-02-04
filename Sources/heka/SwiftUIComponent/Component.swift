@@ -53,6 +53,9 @@ public struct SwiftUIView: View {
     .cornerRadius(8)
     .compositingGroup()
     .shadow(radius: 8)
+    .onAppear {
+      viewModel.checkConnectionStatus()
+    }
     
       //TODO: - Work on Alert
       //        .alert(isPresented: $viewModel.errorOccured) {
