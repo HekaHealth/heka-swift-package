@@ -66,7 +66,7 @@ final public class HekaComponent: UIView {
   }
   
   private func loadXIB() {
-    let resourceBundleURL = Bundle.module.url(forResource: String(describing: self), withExtension: "xib")
+    let resourceBundleURL = Bundle.module.url(forResource: "HekaComponent", withExtension: "xib")
     let bundle = Bundle(url: resourceBundleURL!)
     
       //    let nib = UINib(nibName: String(describing: self), bundle: .module)
