@@ -25,7 +25,7 @@ public struct SwiftUIView: View {
       VStack(alignment: .leading) {
         Text("Apple HealthKit")
           .font(.headline)
-        if viewModel.isSyncStatusLabelHidden {
+        if viewModel.isSyncStatusLabelHidden == false {
           Text("Syncing data...")
             .font(.system(size: 12))
             .foregroundColor(.gray)
