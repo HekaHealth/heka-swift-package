@@ -41,14 +41,14 @@ final public class HekaComponent: UIView {
     self.userUUID = userUUID
     self.key = key
     apiManager = APIManager(apiKey: key)
-    checkConnectionStatus()
+//    checkConnectionStatus()
   }
   
   public func setUser(uuid: String, and key: String) {
     self.userUUID = uuid
     self.key = key
     apiManager = APIManager(apiKey: key)
-    checkConnectionStatus()
+//    checkConnectionStatus()
   }
   
   private func loadXIB() {
