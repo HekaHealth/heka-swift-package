@@ -26,9 +26,18 @@ extension HekaComponent {
   
   func checkHealthKitPermissions() {
     guard hekaManager.checkHealthKitPermissions() else {
-      self.presentAlert(with: "Allow health data permissions in the Seetings App")
+      hekaManager.requestAuthorization { allowed in
+        if allowed {
+          self.makeRequestToWatchSDK()
+        } else {
+          self.presentAlert(with: "Allow health data permissions in the Seetings App")
+        }
+      }
       return
     }
+    makeRequestToWatchSDK()
+  }
+  private func makeRequestToWatchSDK(){
     
       //TODO: - Setup observer query
     apiManager?.makeConnection(
