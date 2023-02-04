@@ -42,9 +42,8 @@ final public class HekaComponent: UIView {
     self.key = key
     apiManager = APIManager(apiKey: key)
     loadXIB()
-    DispatchQueue.main.async {
-      self.checkConnectionStatus()
-    }
+    checkConnectionStatus()
+    
   }
   
   public func setUser(uuid: String, and key: String) {
@@ -52,9 +51,7 @@ final public class HekaComponent: UIView {
     self.key = key
     apiManager = APIManager(apiKey: key)
     loadXIB()
-    DispatchQueue.main.async {
-      self.checkConnectionStatus()
-    }
+    checkConnectionStatus()
   }
   
   private func loadXIB() {
@@ -71,7 +68,9 @@ final public class HekaComponent: UIView {
   @IBAction private func actionConnectButton() {
     switch state {
       case .notConnected:
-        checkHealthKitPermissions()
+        DispatchQueue.main.async {
+          self.checkHealthKitPermissions()
+        }
       case .syncing, .connected:
         break
     }
