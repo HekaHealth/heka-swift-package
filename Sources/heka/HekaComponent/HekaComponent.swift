@@ -52,18 +52,18 @@ final public class HekaComponent: UIView {
     checkConnectionStatus()
   }
   
-  private var bundle: Bundle {
-    let bundle = Bundle(for: HekaComponent.self)
-
-    guard let resourceBundleURL = bundle.url(
-      forResource: "heka", withExtension: "bundle"
-    ), let resourceBundle = Bundle(url: resourceBundleURL) else {
-        // used when the DLS is being used inside the playground app
-      return bundle
-    }
-
-    return resourceBundle
-  }
+//  private var bundle: Bundle {
+//    let bundle = Bundle(for: HekaComponent.self)
+//
+//    guard let resourceBundleURL = bundle.url(
+//      forResource: "heka", withExtension: "bundle"
+//    ), let resourceBundle = Bundle(url: resourceBundleURL) else {
+//        // used when the DLS is being used inside the playground app
+//      return bundle
+//    }
+//
+//    return resourceBundle
+//  }
   
   private func loadXIB() {
 //    let resourceBundleURL = Bundle.module.url(forResource: "HekaComponent", withExtension: "xib")
