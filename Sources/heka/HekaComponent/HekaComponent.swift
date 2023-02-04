@@ -50,6 +50,7 @@ final public class HekaComponent: UIView {
     self.key = key
     apiManager = APIManager(apiKey: key)
 //    checkConnectionStatus()
+    loadXIB()
   }
   
   private func loadXIB() {
