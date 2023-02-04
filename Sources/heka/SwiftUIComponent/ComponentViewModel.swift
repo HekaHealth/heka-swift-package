@@ -57,30 +57,6 @@ extension ComponentViewModel {
     }
   }
   
-  {
-    guard hekaManager.checkHealthKitPermissions() else {
-      hekaManager.requestAuthorization { allowed in
-        if allowed {
-          self.makeRequestToWatchSDK()
-        } else {
-          self.presentAlert(with: "Allow health data permissions in the Seetings App")
-        }
-      }
-      return
-    }
-    
-    hekaManager.syncIosHealthData(
-      apiKey: key!, userUuid: userUUID!,
-      completion: { success in
-        if success {
-        } else {
-          self.presentAlert(with: "Unable to sync health data")
-        }
-      })
-    
-    makeRequestToWatchSDK()
-  }
-  
   func checkHealthKitPermissions() {
     guard hekaManager.checkHealthKitPermissions() else {
       hekaManager.requestAuthorization { allowed in
