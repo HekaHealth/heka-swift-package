@@ -66,16 +66,16 @@ final public class HekaComponent: UIView {
   }
   
   private func loadXIB() {
-      //    let bundle = Bundle.module.url(forResource: "heka", withExtension: "plist")
-      //    let resourceBundle = Bundle(url: resourceBundleURL)
+          let resourceBundleURL = Bundle.module.url(forResource: "heka", withExtension: "plist")
+          let bundle = Bundle(url: resourceBundleURL!)
     
-    let nib = UINib(nibName: String(describing: self), bundle: .module)
-    let view = nib.instantiate(withOwner: self, options: nil).first as? UIView
-    guard let view = view else {
-      fatalError("Unable to locate UI component")
-    }
-    contentView = view
-      //    bundle.loadNibNamed(String(describing: self), owner: self)
+//    let nib = UINib(nibName: String(describing: self), bundle: .module)
+//    let view = nib.instantiate(withOwner: self, options: nil).first as? UIView
+//    guard let view = view else {
+//      fatalError("Unable to locate UI component")
+//    }
+//    contentView = view
+          bundle?.loadNibNamed(String(describing: self), owner: self)
     addSubview(contentView)
     contentView.frame = bounds
     contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
