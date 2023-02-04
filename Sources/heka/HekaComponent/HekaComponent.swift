@@ -34,7 +34,6 @@ final public class HekaComponent: UIView {
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
-//    loadXIB()
   }
   
   convenience public init(userUUID: String, key: String) {
@@ -52,35 +51,11 @@ final public class HekaComponent: UIView {
     checkConnectionStatus()
   }
   
-//  private var bundle: Bundle {
-//    let bundle = Bundle(for: HekaComponent.self)
-//
-//    guard let resourceBundleURL = bundle.url(
-//      forResource: "heka", withExtension: "bundle"
-//    ), let resourceBundle = Bundle(url: resourceBundleURL) else {
-//        // used when the DLS is being used inside the playground app
-//      return bundle
-//    }
-//
-//    return resourceBundle
-//  }
-  
   private func loadXIB() {
-//    let resourceBundleURL = Bundle.module.url(forResource: "HekaComponent", withExtension: "xib")
-//    let bundle = Bundle(url: resourceBundleURL!)
-    
-//          let nib = UINib(nibName: "HekaComponent", bundle: Bundle.module)
-//          let view = nib.instantiate(withOwner: self, options: nil).first as? UIView
-//          guard let view = view else {
-//            fatalError("Unable to locate UI component")
-//          }
-//          contentView = view
-          let loadedNib = Bundle.module.loadNibNamed(String(describing: type(of: self)), owner: self, options: nil)
-      //
-          guard let contentView = loadedNib?.first as? UIView else {
-            fatalError("Unable to locate UI component")
-          }
-//    bundle?.loadNibNamed(String(describing: type(of: self)), owner: self)
+    let loadedNib = Bundle.module.loadNibNamed(String(describing: type(of: self)), owner: self, options: nil)
+    guard let contentView = loadedNib?.first as? UIView else {
+      fatalError("Unable to locate UI component")
+    }
     addSubview(contentView)
     contentView.frame = bounds
     contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
