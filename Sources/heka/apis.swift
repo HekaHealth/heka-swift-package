@@ -34,7 +34,6 @@ class APIManager {
         completion(nil)
         return
       }
-      
       guard let data = response.data, response.error == nil else {
         completion(nil)
         return
