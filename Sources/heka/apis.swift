@@ -28,13 +28,12 @@ class APIManager {
         "key": apiKey,
         "user_uuid": user_uuid,
       ]
-    ).responseJSON { response in
-      
-      if response.response?.statusCode == 404 {
+    ).responseJSON { result in
+      guard let response = result.response, response.statusCode == 404 else {
         completion(nil)
         return
       }
-      guard let data = response.data, response.error == nil else {
+      guard let data = result.data, result.error == nil else {
         completion(nil)
         return
       }
