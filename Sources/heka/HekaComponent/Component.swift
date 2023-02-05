@@ -1,27 +1,27 @@
-  //
-  //  Component.swift
-  //  
-  //
-  //  Created by Gaurav Tiwari on 04/02/23.
-  //
+//
+//  Component.swift
+//
+//
+//  Created by Gaurav Tiwari on 04/02/23.
+//
 
 import SwiftUI
 
 public struct SwiftUIView: View {
-  
+
   @ObservedObject var viewModel: ComponentViewModel
-  
+
   public init(uuid: String, apiKey: String) {
     viewModel = ComponentViewModel(uuid: uuid, apiKey: apiKey)
   }
-  
+
   public var body: some View {
     HStack {
       Image("appleHealthKit", bundle: .module)
         .resizable()
         .frame(width: 25, height: 25)
         .padding()
-      
+
       VStack(alignment: .leading) {
         Text("Apple HealthKit")
           .font(.headline)
@@ -31,16 +31,16 @@ public struct SwiftUIView: View {
             .foregroundColor(.gray)
         }
       }
-      
+
       Spacer()
-      
+
       Button(viewModel.buttonTitle) {
         switch viewModel.currentConnectionState {
-          case .notConnected:
-            viewModel.checkHealthKitPermissions()
-            break
-          case .syncing, .connected:
-            break
+        case .notConnected:
+          viewModel.checkHealthKitPermissions()
+          break
+        case .syncing, .connected:
+          break
         }
       }
       .frame(width: 100, height: 40)
@@ -56,17 +56,17 @@ public struct SwiftUIView: View {
     .onAppear {
       viewModel.checkConnectionStatus()
     }
-    
-      //TODO: - Work on Alert
-      //        .alert(isPresented: $viewModel.errorOccured) {
-      //            Alert(
-      //                title: Text("Error!"),
-      //                message: Text(viewModel.errorDescription),
-      //                dismissButton: .default(Text("OK")) {
-      //                    viewModel.errorOccured = false
-      //                }
-      //            )
-      //        }
+
+    //TODO: - Work on Alert
+    //        .alert(isPresented: $viewModel.errorOccured) {
+    //            Alert(
+    //                title: Text("Error!"),
+    //                message: Text(viewModel.errorDescription),
+    //                dismissButton: .default(Text("OK")) {
+    //                    viewModel.errorOccured = false
+    //                }
+    //            )
+    //        }
   }
 }
 
