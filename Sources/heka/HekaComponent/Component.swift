@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct SwiftUIView: View {
+public struct HekaUIView: View {
 
   @ObservedObject var viewModel: ComponentViewModel
 
@@ -70,9 +70,9 @@ public struct SwiftUIView: View {
   }
 }
 
-struct SwiftUIView_Previews: PreviewProvider {
+struct HekaUIView_Previews: PreviewProvider {
   static var previews: some View {
-    SwiftUIView(
+    HekaUIView(
       uuid: UUID().uuidString,
       apiKey: "7368bad8-aadd-4624-a58c-7e8af2b3cfb7"
     )
