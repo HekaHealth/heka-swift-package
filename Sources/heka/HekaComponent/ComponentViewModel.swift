@@ -76,7 +76,6 @@ extension ComponentViewModel {
   }
   
   private func syncIosHealthData() {
-    self.setState(to: .syncing)
     self.hekaManager.syncIosHealthData(
       apiKey: self.apiKey, userUuid: self.uuid
     ) { success in
@@ -90,6 +89,7 @@ extension ComponentViewModel {
   }
   
   private func makeConnectionRequest() {
+    self.setState(to: .syncing)
     apiManager.makeConnection(
       userUuid: uuid, platform: "apple_healthkit",
       googleFitRefreshToken: nil, emailId: nil
