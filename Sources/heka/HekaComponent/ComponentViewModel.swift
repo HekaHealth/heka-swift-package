@@ -68,31 +68,35 @@ extension ComponentViewModel {
   func checkHealthKitPermissions() {
     hekaManager.requestAuthorization { allowed in
       if allowed {
-        self.setState(to: .syncing)
-        self.hekaManager.syncIosHealthData(
-          apiKey: self.apiKey, userUuid: self.uuid
-        ) { success in
-          if success {
-            self.makeRequestToWatchSDK()
-          } else {
-            self.setState(to: .notConnected)
-            self.errorDescription = "Unable to sync health data"
-          }
-        }
+        self.makeConnectionRequest()
       } else {
         self.errorDescription = "Please allow health app access permission, in order to use this widget"
       }
     }
   }
   
-  private func makeRequestToWatchSDK() {
+  private func syncIosHealthData() {
+    self.setState(to: .syncing)
+    self.hekaManager.syncIosHealthData(
+      apiKey: self.apiKey, userUuid: self.uuid
+    ) { success in
+      if success {
+        self.setState(to: .connected)
+      } else {
+        self.setState(to: .notConnected)
+        self.errorDescription = "Unable to sync health data"
+      }
+    }
+  }
+  
+  private func makeConnectionRequest() {
     apiManager.makeConnection(
       userUuid: uuid, platform: "apple_healthkit",
       googleFitRefreshToken: nil, emailId: nil
     ) { result in
       switch result {
         case .success:
-          self.setState(to: .connected)
+          self.syncIosHealthData()
         case .failure(let failure):
           self.setState(to: .notConnected)
           self.errorDescription = failure.localizedDescription
