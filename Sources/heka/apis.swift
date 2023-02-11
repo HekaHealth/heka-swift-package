@@ -41,7 +41,6 @@ class APIManager {
       do {
         let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
         let data = json["data"] as! [String: Any]
-        let id = data["id"] as! Int
         let userUuid = data["user_uuid"] as! String
         let connectedPlatformsArray = data["connected_platforms"] as! [[String: Any]]
         let connectedPlatforms = connectedPlatformsArray.map { platformData -> ConnectedPlatform in
@@ -90,7 +89,6 @@ class APIManager {
       case let .success(value):
         let json = JSON(value)
         if let data = json["data"].dictionary,
-          let id = data["id"]?.int,
           let userUuid = data["user_uuid"]?.string,
           let connectedPlatforms = data["connected_platforms"]?.array
         {
