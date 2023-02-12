@@ -11,6 +11,7 @@ struct ConnectedPlatform {
   let platform: String
   let loggedIn: Bool
   let lastSync: String?
+  let connectedDeviceUUIDs: [String]?
 }
 
 struct Connection {
