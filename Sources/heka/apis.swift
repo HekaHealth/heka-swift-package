@@ -163,12 +163,12 @@ class APIManager {
     .responseJSON { result in
       if let response = result.response, response.statusCode == 404 {
         completion(
-          .failure(nserror(domain: "com.heka", code: 404, userinfo: nil)))
+          .failure(NSError(domain: "com.heka", code: 404, userinfo: nil)))
         return
       }
       guard let data = result.data, result.error == nil else {
         completion(
-          .failure(nserror(domain: "com.heka", code: 404, userinfo: nil)))
+          .failure(NSError(domain: "com.heka", code: 404, userinfo: nil)))
         return
       }
 
