@@ -118,7 +118,7 @@ class APIManager {
         }
 
         let connection = Connection(userUuid: userUuid, connectedPlatforms: connectedPlatforms)
-        completion(connection)
+        completion(.success(connection))
 
       case let .failure(error):
         completion(.failure(error))
@@ -174,7 +174,7 @@ class APIManager {
         }
 
         let connection = Connection(userUuid: userUuid, connectedPlatforms: connectedPlatforms)
-        completion(connection)
+        completion(.success(connection))
 
       case let .failure(error):
         completion(.failure(error))
