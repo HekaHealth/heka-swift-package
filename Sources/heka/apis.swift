@@ -7,7 +7,6 @@
 
 import Alamofire
 import Foundation
-import SwiftyJSON
 import UIKit
 
 class APIManager {
@@ -94,12 +93,21 @@ class APIManager {
       ],
       encoding: JSONEncoding.default
     )
-    .responseJSON { response in
-      switch response.result {
-      case let .success(value):
-        let json = JSON(value)
-        let data = json["data"].dictionary as! [String: Any]
+    .responseJSON { result in
+      if let response = result.response, response.statusCode == 404 {
+        completion(nil)
+        return
+      }
+      guard let data = result.data, result.error == nil else {
+        completion(nil)
+        return
+      }
+
+      do {
+        let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+        let data = json["data"] as! [String: Any]
         let userUuid = data["user_uuid"] as! String
+
         guard let connections = data["connections"] as? [String: [String: Any]] else {
           // Handle error if the "connections" key is not found in the response
           return
@@ -118,9 +126,9 @@ class APIManager {
         }
 
         let connection = Connection(userUuid: userUuid, connectedPlatforms: connectedPlatforms)
-        completion(.success(connection))
-
-      case let .failure(error):
+        completion(.sucess(connection))
+      } catch {
+        print("Error parsing JSON data: \(error)")
         completion(.failure(error))
       }
     }
@@ -149,13 +157,21 @@ class APIManager {
       ],
       encoding: JSONEncoding.default
     )
-    .responseJSON { response in
-      switch response.result {
-      case let .success(value):
-        let json = JSON(value)
-        let data = json["data"].dictionary as! [String: Any]
-        // TODO: unify this code replicated 3 times in this file
-        let userUuid = data["user_uuid"]?.string
+    .responseJSON { result in
+      if let response = result.response, response.statusCode == 404 {
+        completion(nil)
+        return
+      }
+      guard let data = result.data, result.error == nil else {
+        completion(nil)
+        return
+      }
+
+      do {
+        let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+        let data = json["data"] as! [String: Any]
+        let userUuid = data["user_uuid"] as! String
+
         guard let connections = data["connections"] as? [String: [String: Any]] else {
           // Handle error if the "connections" key is not found in the response
           return
@@ -174,9 +190,9 @@ class APIManager {
         }
 
         let connection = Connection(userUuid: userUuid, connectedPlatforms: connectedPlatforms)
-        completion(.success(connection))
-
-      case let .failure(error):
+        completion(.sucess(connection))
+      } catch {
+        print("Error parsing JSON data: \(error)")
         completion(.failure(error))
       }
     }
