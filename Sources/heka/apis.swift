@@ -71,7 +71,7 @@ class APIManager {
 
   func makeConnection(
     userUuid: String, platform: String, googleFitRefreshToken: String?, emailId: String?,
-    completion: @escaping (Result<Connection, Error>) -> Void
+    completion: @escaping (Result<Connection, Error?>) -> Void
   ) {
 
     let queryItems = [
@@ -137,7 +137,7 @@ class APIManager {
 
   func disconnect(
     userUuid: String, platform: String,
-    completion: @escaping (Result<Connection, Error>) -> Void
+    completion: @escaping (Result<Connection, Error?>) -> Void
   ) {
     let queryItems = [
       URLQueryItem(name: "key", value: apiKey),
