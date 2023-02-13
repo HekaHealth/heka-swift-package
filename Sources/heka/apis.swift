@@ -95,13 +95,13 @@ class APIManager {
     )
     .responseJSON { result in
       if let response = result.response, response.statusCode == 404 {
-        let result: Result<Something, AFError> = .failure(
+        let result: Result<Connection, AFError> = .failure(
           .responseValidationFailed(reason: .unacceptableStatusCode(code: 404)))
         completion(result)
         return
       }
       guard let data = result.data, result.error == nil else {
-        let result: Result<Something, AFError> = .failure(
+        let result: Result<Connection, AFError> = .failure(
           .responseValidationFailed(reason: .unacceptableStatusCode(code: 404)))
         completion(result)
         return
@@ -163,13 +163,13 @@ class APIManager {
     )
     .responseJSON { result in
       if let response = result.response, response.statusCode == 404 {
-        let result: Result<Something, AFError> = .failure(
+        let result: Result<Connection, AFError> = .failure(
           .responseValidationFailed(reason: .unacceptableStatusCode(code: 404)))
         completion(result)
         return
       }
       guard let data = result.data, result.error == nil else {
-        let result: Result<Something, AFError> = .failure(
+        let result: Result<Connection, AFError> = .failure(
           .responseValidationFailed(reason: .unacceptableStatusCode(code: 404)))
         completion(result)
         return
