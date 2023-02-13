@@ -134,7 +134,7 @@ class APIManager {
     let queryItems = [
       URLQueryItem(name: "key", value: apiKey),
       URLQueryItem(name: "user_uuid", value: userUuid),
-      URLQueryItem(name: "disconnect", value: true),
+      URLQueryItem(name: "disconnect", value: String(true)),
     ]
 
     let deviceId = UIDevice.current.identifierForVendor!.uuidString
