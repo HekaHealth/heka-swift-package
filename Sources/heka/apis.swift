@@ -43,12 +43,17 @@ class APIManager {
         let data = json["data"] as! [String: Any]
         let userUuid = data["user_uuid"] as! String
 
-        guard let connections = data["connections"] as? [String: [String: Any]] else {
+        guard let connections = data["connections"] as? [String: [String: Any]?] else {
           // Handle error if the "connections" key is not found in the response
           return
         }
         var connectedPlatforms = [String: ConnectedPlatform]()
         for (platformName, platformData) in connections {
+          if platformData == nil {
+            connectedPlatforms[platformName] = nil
+            continue
+          }
+          let platformData = platformData!
           let platform = platformData["platform_name"] as? String ?? ""
           let loggedIn = platformData["logged_in"] as? Bool ?? false
           let lastSync = platformData["last_sync"] as? String
@@ -111,12 +116,17 @@ class APIManager {
         let data = json["data"] as! [String: Any]
         let userUuid = data["user_uuid"] as! String
 
-        guard let connections = data["connections"] as? [String: [String: Any]] else {
+        guard let connections = data["connections"] as? [String: [String: Any]?] else {
           // Handle error if the "connections" key is not found in the response
           return
         }
         var connectedPlatforms = [String: ConnectedPlatform]()
         for (platformName, platformData) in connections {
+          if platformData == nil {
+            connectedPlatforms[platformName] = nil
+            continue
+          }
+          let platformData = platformData!
           let platform = platformData["platform_name"] as? String ?? ""
           let loggedIn = platformData["logged_in"] as? Bool ?? false
           let lastSync = platformData["last_sync"] as? String
@@ -177,12 +187,17 @@ class APIManager {
         let data = json["data"] as! [String: Any]
         let userUuid = data["user_uuid"] as! String
 
-        guard let connections = data["connections"] as? [String: [String: Any]] else {
+        guard let connections = data["connections"] as? [String: [String: Any]?] else {
           // Handle error if the "connections" key is not found in the response
           return
         }
         var connectedPlatforms = [String: ConnectedPlatform]()
         for (platformName, platformData) in connections {
+          if platformData == nil {
+            connectedPlatforms[platformName] = nil
+            continue
+          }
+          let platformData = platformData!
           let platform = platformData["platform_name"] as? String ?? ""
           let loggedIn = platformData["logged_in"] as? Bool ?? false
           let lastSync = platformData["last_sync"] as? String
@@ -203,5 +218,4 @@ class APIManager {
     }
 
   }
-
 }
