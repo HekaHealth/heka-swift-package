@@ -95,15 +95,14 @@ class APIManager {
     )
     .responseJSON { result in
       if let response = result.response, response.statusCode == 404 {
+        // TODO: improve this error handling
         completion(
-          .failure(
-            .responseValidationFailed(reason: .unacceptableStatusCode(code: 404))))
+          .failure(NSError(domain: "com.heka", code: 404, userInfo: nil)))
         return
       }
       guard let data = result.data, result.error == nil else {
         completion(
-          .failure(
-            .responseValidationFailed(reason: .unacceptableStatusCode(code: 404))))
+          .failure(NSError(domain: "com.heka", code: 404, userInfo: nil)))
         return
       }
 
@@ -164,14 +163,12 @@ class APIManager {
     .responseJSON { result in
       if let response = result.response, response.statusCode == 404 {
         completion(
-          .failure(
-            .responseValidationFailed(reason: .unacceptableStatusCode(code: 404))))
+          .failure(nserror(domain: "com.heka", code: 404, userinfo: nil)))
         return
       }
       guard let data = result.data, result.error == nil else {
         completion(
-          .failure(
-            .responseValidationFailed(reason: .unacceptableStatusCode(code: 404))))
+          .failure(nserror(domain: "com.heka", code: 404, userinfo: nil)))
         return
       }
 
