@@ -155,7 +155,7 @@ class APIManager {
         let json = JSON(value)
         let data = json["data"].dictionary as! [String: Any]
         // TODO: unify this code replicated 3 times in this file
-        let userUuid = data["user_uuid"] as! String
+        let userUuid = data["user_uuid"]?.string
         guard let connections = data["connections"] as? [String: [String: Any]] else {
           // Handle error if the "connections" key is not found in the response
           return
