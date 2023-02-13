@@ -95,11 +95,11 @@ class APIManager {
     )
     .responseJSON { result in
       if let response = result.response, response.statusCode == 404 {
-        completion(.failure())
+        completion(.failure(error))
         return
       }
       guard let data = result.data, result.error == nil else {
-        completion(.failure())
+        completion(.failure(error))
         return
       }
 
@@ -159,11 +159,11 @@ class APIManager {
     )
     .responseJSON { result in
       if let response = result.response, response.statusCode == 404 {
-        completion(.failure())
+        completion(.failure(error))
         return
       }
       guard let data = result.data, result.error == nil else {
-        completion(.failure())
+        completion(.failure(error))
         return
       }
 
