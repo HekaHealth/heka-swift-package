@@ -61,7 +61,7 @@ extension ComponentViewModel {
         self.setState(to: .notConnected)
         return
       }
-      if connection?.isPlatformConnected("apple_healthkit") ?? false {
+      if connection?.isPlatformConnected(platform: "apple_healthkit") ?? false {
         self.setState(to: .connected)
       } else {
         self.setState(to: .notConnected)
