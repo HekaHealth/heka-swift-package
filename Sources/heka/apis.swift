@@ -71,7 +71,7 @@ class APIManager {
 
   func makeConnection(
     userUuid: String, platform: String, googleFitRefreshToken: String?, emailId: String?,
-    completion: @escaping (Result<Connection, Error?>) -> Void
+    completion: @escaping (Result<Connection, Error>) -> Void
   ) {
 
     let queryItems = [
@@ -95,11 +95,11 @@ class APIManager {
     )
     .responseJSON { result in
       if let response = result.response, response.statusCode == 404 {
-        completion(nil)
+        completion(.failure())
         return
       }
       guard let data = result.data, result.error == nil else {
-        completion(nil)
+        completion(.failure())
         return
       }
 
@@ -126,7 +126,7 @@ class APIManager {
         }
 
         let connection = Connection(userUuid: userUuid, connectedPlatforms: connectedPlatforms)
-        completion(.sucess(connection))
+        completion(.success(connection))
       } catch {
         print("Error parsing JSON data: \(error)")
         completion(.failure(error))
@@ -137,7 +137,7 @@ class APIManager {
 
   func disconnect(
     userUuid: String, platform: String,
-    completion: @escaping (Result<Connection, Error?>) -> Void
+    completion: @escaping (Result<Connection, Error>) -> Void
   ) {
     let queryItems = [
       URLQueryItem(name: "key", value: apiKey),
@@ -159,11 +159,11 @@ class APIManager {
     )
     .responseJSON { result in
       if let response = result.response, response.statusCode == 404 {
-        completion(nil)
+        completion(.failure())
         return
       }
       guard let data = result.data, result.error == nil else {
-        completion(nil)
+        completion(.failure())
         return
       }
 
@@ -190,7 +190,7 @@ class APIManager {
         }
 
         let connection = Connection(userUuid: userUuid, connectedPlatforms: connectedPlatforms)
-        completion(.sucess(connection))
+        completion(.success(connection))
       } catch {
         print("Error parsing JSON data: \(error)")
         completion(.failure(error))
