@@ -39,8 +39,11 @@ public struct HekaUIView: View {
         case .notConnected:
           viewModel.checkHealthKitPermissions()
           break
-        case .syncing, .connected:
+        case .syncing:
           break
+        case .connected:
+            //TODO: - Maybe add some sort of confirmation
+            viewModel.disconnectFromServer()
         }
       }
       .frame(width: 100, height: 40)

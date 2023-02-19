@@ -121,7 +121,8 @@ class HealthStore {
   let HEADACHE_SEVERE = "HEADACHE_SEVERE"
 
   private let firstUploadKeychainHelper = FirstUploadKeychainHelper()
-  private var apiManager: APIManager?
+  private var uploadClient: FileUploadClinet?
+  private let fileHandler = JSONFileHandler()
   
   init() {
     if HKHealthStore.isHealthDataAvailable() {
@@ -408,24 +409,11 @@ class HealthStore {
             self.BODY_FAT_PERCENTAGE,
           ])
         }.done { samples in
-          
           if !samples.isEmpty {
-            self.apiManager = APIManager(apiKey: apiKey)
-            self.apiManager?.syncUserData(
-              with: samples,
-              and: userUuid
-            ) { syncSuccessful in
-              switch syncSuccessful {
-                case true:
-                  self.firstUploadKeychainHelper.markFirstUpload()
-                  print("Data synced successfully")
-                case false:
-                  print("Data synced failed")
-              }
+            self.handleUserData(with: samples, apiKey: apiKey, uuid: userUuid) {
               completionHandler()
             }
           }
-          
         }
       }
 
@@ -446,7 +434,33 @@ class HealthStore {
         }
       })
   }
-
+  
+  private func handleUserData(
+    with samples: [String: Any],
+    apiKey: String, uuid: String,
+    with completion: @escaping () -> Void
+  ) {
+    fileHandler.createJSONFile(with: samples) { filePath in
+      self.uploadClient = FileUploadClinet(
+        apiKey: apiKey, userUUID: uuid
+      )
+      
+      self.uploadClient?.uploadUserDataFile(
+        from: filePath, with: FileDetails()
+      ) { syncSuccessful in
+          switch syncSuccessful {
+            case true:
+              self.firstUploadKeychainHelper.markFirstUpload()
+              print("Data synced successfully")
+            case false:
+              print("Data synced failed")
+          }
+          self.fileHandler.deleteJSONFile()
+          completion()
+        }
+    }
+  }
+  
   func combineResults(healthDataTypes: [String]) -> Promise<[String: [NSDictionary]]> {
     var promises = [Promise<[NSDictionary]>]()
     var results: [String: [NSDictionary]] = [:]
@@ -477,15 +491,15 @@ class HealthStore {
     let dataType = dataTypesDict[dataTypeKey]
     var predicate: NSPredicate? = nil
     
-//    if let lastSync = firstUploadKeychainHelper.lastSyncDate {
-//      predicate = HKQuery.predicateForSamples(
-//        withStart: lastSync, end: Date(), options: .strictStartDate)
-//    } else {
+    if let lastSync = firstUploadKeychainHelper.lastSyncDate {
+      predicate = HKQuery.predicateForSamples(
+        withStart: lastSync, end: Date(), options: .strictStartDate)
+    } else {
       let today = Date()
       let start = Calendar.current.date(byAdding: .day, value: -120, to: today)!
       predicate = HKQuery.predicateForSamples(
         withStart: start, end: today, options: .strictStartDate)
-//    }
+    }
 
     let q = HKSampleQuery(
       sampleType: dataType!, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil

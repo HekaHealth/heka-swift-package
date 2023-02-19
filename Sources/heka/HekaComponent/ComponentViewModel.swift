@@ -22,13 +22,13 @@ final class ComponentViewModel: ObservableObject {
 
   var uuid: String
   var apiKey: String
-  private let apiManager: APIManager
   private let hekaManager = HekaManager()
+  private let connectionClient: ConnectionClient
 
   init(uuid: String, apiKey: String) {
     self.uuid = uuid
     self.apiKey = apiKey
-    apiManager = APIManager(apiKey: apiKey)
+    connectionClient = ConnectionClient(apiKey: apiKey, userUUID: uuid, platform: "apple_healthkit")
   }
 
   var buttonTitle: String {
@@ -56,15 +56,17 @@ extension ComponentViewModel {
   }
 
   func checkConnectionStatus() {
-    apiManager.fetchConnection(user_uuid: uuid) { connection in
-      guard connection != nil else {
-        self.setState(to: .notConnected)
-        return
-      }
-      if connection?.isPlatformConnected(platform: "apple_healthkit") ?? false {
-        self.setState(to: .connected)
-      } else {
-        self.setState(to: .notConnected)
+    connectionClient.fetchConnection { result in
+      switch result {
+        case .failure(let error):
+          self.errorDescription = error.localizedDescription
+          self.setState(to: .notConnected)
+        case .success(let connection):
+          if connection.isPlatformConnected(platform: "apple_healthkit") {
+            self.setState(to: .connected)
+          } else {
+            self.setState(to: .notConnected)
+          }
       }
     }
   }
@@ -80,6 +82,17 @@ extension ComponentViewModel {
     }
   }
 
+  func disconnectFromServer() {
+    connectionClient.disconnect { result in
+      switch result {
+        case .failure(let error):
+          self.errorDescription = error.localizedDescription
+        case .success:
+          self.setState(to: .notConnected)
+      }
+    }
+  }
+  
   private func syncIosHealthData() {
     self.hekaManager.syncIosHealthData(
       apiKey: self.apiKey, userUuid: self.uuid
@@ -95,16 +108,14 @@ extension ComponentViewModel {
 
   private func makeConnectionRequest() {
     self.setState(to: .syncing)
-    apiManager.makeConnection(
-      userUuid: uuid, platform: "apple_healthkit",
-      googleFitRefreshToken: nil, emailId: nil
-    ) { result in
+    
+    connectionClient.connectToServer { result in
       switch result {
-      case .success:
-        self.syncIosHealthData()
-      case .failure(let failure):
-        self.setState(to: .notConnected)
-        self.errorDescription = failure.localizedDescription
+        case .success:
+          self.syncIosHealthData()
+        case .failure(let error):
+          self.setState(to: .notConnected)
+          self.errorDescription = error.localizedDescription
       }
     }
   }
