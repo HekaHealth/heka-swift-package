@@ -17,10 +17,10 @@ public struct HekaUIView: View {
 
   public var body: some View {
     HStack {
-      Image("appleHealthKit", bundle: .module)
-        .resizable()
-        .frame(width: 25, height: 25)
-        .padding()
+      // Image("appleHealthKit", bundle: .module)
+      //   .resizable()
+      //   .frame(width: 25, height: 25)
+      //   .padding()
 
       VStack(alignment: .leading) {
         Text("Apple HealthKit")
