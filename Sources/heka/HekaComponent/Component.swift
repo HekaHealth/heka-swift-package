@@ -55,7 +55,6 @@ public struct HekaUIView: View {
     .background(Color(UIColor.secondarySystemBackground))
     .cornerRadius(8)
     .compositingGroup()
-    .shadow(radius: 8)
     .onAppear {
       viewModel.checkConnectionStatus()
     }
