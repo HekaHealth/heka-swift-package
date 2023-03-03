@@ -17,7 +17,7 @@ enum ConnectionState {
     case .syncing:
       return "Syncing"
     case .connected:
-      return "Connected"
+      return "Disconnect"
     }
   }
 
