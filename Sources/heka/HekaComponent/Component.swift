@@ -17,7 +17,7 @@ public struct HekaUIView: View {
 
   public var body: some View {
     HStack {
-      Image("appleHealthKit", bundle: HekaResources.resourceBundle)
+      Image("healthIcon", bundle: HekaResources.resourceBundle)
         .resizable()
         .frame(width: 25, height: 25)
         .padding()
