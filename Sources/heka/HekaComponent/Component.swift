@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@available(macCatalyst 15.0, *)
 public struct HekaUIView: View {
 
   @ObservedObject var viewModel: ComponentViewModel
@@ -53,9 +52,9 @@ public struct HekaUIView: View {
       .cornerRadius(20)
     }
     .padding(8)
-    .background(.white)
     .cornerRadius(8)
     .compositingGroup()
+    .background(Color(.white))
     .onAppear {
       viewModel.checkConnectionStatus()
     }
