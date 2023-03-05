@@ -19,7 +19,7 @@ public struct HekaUIView: View {
     HStack {
       Image("healthIcon", bundle: HekaResources.resourceBundle)
         .resizable()
-        .frame(width: 25, height: 25)
+        .frame(width: 50, height: 50)
         .padding()
 
       VStack(alignment: .leading) {
